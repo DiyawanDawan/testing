@@ -9,7 +9,7 @@ app.use((req, res, next) => {
 
 // Route utama
 app.get('/', (req, res) => {
-  res.send('🚀 Express Docker Testing di localhost:3000');
+  res.send('🚀 Express Docker Testing di');
 });
 
 export default app;
