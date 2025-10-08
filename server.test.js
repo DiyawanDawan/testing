@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from './server.js';
+import app from './index.js';
 
 describe('Server Express Test', () => {
   test('GET / harus mengembalikan pesan sukses', async () => {
