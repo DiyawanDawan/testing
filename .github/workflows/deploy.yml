@@ -16,9 +16,33 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            echo "🚀 Starting deployment..."
+            
+            # Fix 1: Reset local changes dan pull fresh
             cd /var/www/testing
+            git reset --hard HEAD
+            git clean -fd
             git pull origin main
+            
+            # Fix 2: Install Node.js jika belum ada
+            if ! command -v node &> /dev/null; then
+              echo "📥 Installing Node.js..."
+              curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+              apt-get install -y nodejs
+            fi
+            
+            # Fix 3: Install PM2 global jika belum ada
+            if ! command -v pm2 &> /dev/null; then
+              echo "📥 Installing PM2..."
+              npm install -g pm2
+            fi
+            
+            # Install dependencies
+            echo "📦 Installing dependencies..."
             npm install
-            git status
+            
+            # Start/Restart application
+            echo "🚀 Starting application..."
             pm2 restart test-deploy || pm2 start index.js --name "test-deploy"
+            
             echo "✅ Deployed successfully!"
