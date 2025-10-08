@@ -1,23 +1,24 @@
 import express from 'express';
 const app = express();
 
-// Tambahkan middleware logging
+// Middleware logging
 app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-    console.log('Headers:', req.headers);
-    next();
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
 });
 
-
-// Route root
+// Route utama
 app.get('/', (req, res) => {
   res.send('🚀 Express Docker Testing di localhost:3000');
 });
 
-// Bind ke localhost dengan port 4000
-const PORT = 3000;
-const HOST = '0.0.0.0';
+export default app;
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server jalan di http://${HOST}:${PORT}`);
-});
+// Jalankan server hanya jika bukan mode test
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = 3000;
+  const HOST = '0.0.0.0';
+  app.listen(PORT, HOST, () => {
+    console.log(`Server jalan di http://${HOST}:${PORT}`);
+  });
+}
