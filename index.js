@@ -11,7 +11,7 @@ app.use((req, res, next) => {
 
 // Route root
 app.get('/', (req, res) => {
-  res.send('🚀 Express Docker Testing di localhost');
+  res.send('🚀 Express Docker Testing di localhost:3000');
 });
 
 // Bind ke localhost dengan port 4000
